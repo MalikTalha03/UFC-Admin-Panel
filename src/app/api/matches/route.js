@@ -30,21 +30,26 @@ export const GET = async function (req, res) {
     console.log("Updated Matches: ", updatedMatches);
 
     updatedMatches.sort((a, b) => {
-      // Check if player1 and player2 exist
-      if (!a.player1 || !b.player1) {
-        console.warn("Player1 is undefined in match:", a);
-        return 1; // Move undefined players to the end
+      // Ensure that both matches have valid date fields
+      if (!a.date || !b.date) {
+        console.warn("Date is undefined in one of the matches:", a, b);
+        return 1; // Move undefined dates to the end
       }
-      if (!a.player2 || !b.player2) {
-        console.warn("Player2 is undefined in match:", a);
-        return 1; // Move undefined players to the end
-      }
-      // Perform sorting
-      if (a.date === b.date) {
+    
+      // Convert dates to time for comparison
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+    
+      // Perform sorting based on the date
+      if (dateA.getTime() === dateB.getTime()) {
+        // If dates are the same, sort by player1's name
         return a.player1.localeCompare(b.player1);
       }
-      return a.date.localeCompare(b.date);
+    
+      // Sort based on the date
+      return dateA.getTime() - dateB.getTime();
     });
+    
 
     return new Response(JSON.stringify(updatedMatches), { status: 200 });
   } catch (error) {
