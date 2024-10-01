@@ -1,3 +1,8 @@
+
+import dbConnect from '@/lib/mongo';
+import Highlight from '@/models/Highlights';
+import Player from '../../../models/Player';
+
 export const GET = async function (req, res) {
   await dbConnect();
   try {
