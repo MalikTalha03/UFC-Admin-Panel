@@ -48,8 +48,11 @@ export function Highlights() {
               <TrophyIcon className="h-6 w-6" />
               <span>Match Manager</span>
             </Link>
-            <Button className="ml-auto h-8 w-8" size="icon" variant="outline"
-            onClick={() => setOpenNot(true)}
+            <Button
+              className="ml-auto h-8 w-8"
+              size="icon"
+              variant="outline"
+              onClick={() => setOpenNot(true)}
             >
               <BellIcon className="h-4 w-4" />
               <span className="sr-only">Toggle notifications</span>
@@ -62,7 +65,7 @@ export function Highlights() {
                 href="/players"
               >
                 <UsersIcon className="h-4 w-4" />
-                Teams
+                Players
               </Link>
               <Link
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
@@ -100,7 +103,7 @@ export function Highlights() {
         <header className="flex h-14 items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40 lg:h-[60px]">
           <Link className="lg:hidden" href="#">
             <TrophyIcon className="h-6 w-6" />
-            <span className="sr-only">Home</span>
+            <span className="sr-only" >Home</span>
           </Link>
           <div className="flex-1 w-full">
             <Button
@@ -117,7 +120,6 @@ export function Highlights() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Week</TableHead>
                   <TableHead>Match</TableHead>
                   <TableHead>Score</TableHead>
                   <TableHead>Actions</TableHead>
@@ -131,7 +133,6 @@ export function Highlights() {
                 ) : (
                   highlights.map((highlight) => (
                     <TableRow key={highlight._id}>
-                      <TableCell>{highlight.week}</TableCell>
                       <TableCell>
                         {highlight.team1.name} vs {highlight.team2.name}
                       </TableCell>
@@ -300,15 +301,8 @@ function TvChannelIcon(props) {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <rect x="2" y="7" width="20" height="15" rx="2" ry="2" />
-      <path d="M12 2 L16 7 H8 L12 2 Z" /> {/* Top antenna */}
-      <line x1="12" x2="12" y1="2" y2="7" /> {/* Antenna pole */}
-      <line x1="2" x2="22" y1="12" y2="12" /> {/* Horizontal mid-line */}
-      <line x1="7" x2="7" y1="17" y2="22" /> {/* Stand legs */}
-      <line x1="12" x2="12" y1="17" y2="22" /> {/* Stand middle leg */}
-      <line x1="17" x2="17" y1="17" y2="22" /> {/* Stand legs */}
-      <ellipse cx="12" cy="4.5" rx="3" ry="1.5" />{" "}
-      {/* Signal waves on the antenna */}
+      <rect width="20" height="15" x="2" y="7" rx="2" ry="2" />
+      <path d="m17 2-5 5-5-5" />
     </svg>
   );
 }
