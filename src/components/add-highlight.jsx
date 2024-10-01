@@ -33,7 +33,6 @@ export function AddHighlight({ open, onChange }) {
     team2: { name: "", score: "" },
     channelLink: "",
     headers: "",
-    week: "",
   });
   const [teams, setTeams] = useState([]);
   const [isTeam1DropdownOpen, setIsTeam1DropdownOpen] = useState(false);
@@ -66,7 +65,6 @@ export function AddHighlight({ open, onChange }) {
           team2: highlight.team2,
           channelLink: highlight.channelLink,
           headers: highlight.headers,
-          week: highlight.week,
         }),
       });
 
@@ -254,21 +252,7 @@ export function AddHighlight({ open, onChange }) {
                 value={highlight.headers}
               />
             </div>
-            {/* Week */}
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label className="text-right" htmlFor="week">
-                Week
-              </Label>
-              <Input
-                className="col-span-3"
-                id="week"
-                placeholder="Enter week"
-                onChange={(e) =>
-                  setHighlight({ ...highlight, week: e.target.value })
-                }
-                value={highlight.week}
-              />
-            </div>
+            
           </div>
           <DialogFooter>
             <Button
