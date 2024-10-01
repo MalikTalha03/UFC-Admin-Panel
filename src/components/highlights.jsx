@@ -134,10 +134,10 @@ export function Highlights() {
                   highlights.map((highlight) => (
                     <TableRow key={highlight._id}>
                       <TableCell>
-                        {highlight.team1.name} vs {highlight.team2.name}
+                        {highlight.player1.name} vs {highlight.player2.name}
                       </TableCell>
                       <TableCell>
-                        {highlight.team1.score} - {highlight.team2.score}
+                        {highlight.player1.score} - {highlight.player2.score}
                       </TableCell>
                       <TableCell>
                         <DeleteIcon />

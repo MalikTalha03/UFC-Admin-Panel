@@ -61,8 +61,8 @@ export function AddHighlight({ open, onChange }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          team1: highlight.team1,
-          team2: highlight.team2,
+          player1: highlight.team1,
+          player2: highlight.team2,
           channelLink: highlight.channelLink,
           headers: highlight.headers,
         }),
