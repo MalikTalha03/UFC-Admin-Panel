@@ -9,7 +9,6 @@ export const GET = async function (req, res) {
     // Fetch all highlights and players from the database
     const highlights = await Highlight.find({});
 
-    console.log("Highlights", highlights);
 
 
     return new Response(JSON.stringify(highlights), { status: 200 });
