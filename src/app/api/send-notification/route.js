@@ -24,7 +24,6 @@ const handler = async (req, res) => {
 
   try {
     const response = await admin.messaging().send(message);
-    console.log("Successfully sent message to topic: ", message.topic);
     return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (error) {
     console.error("Error sending notification:", error);
