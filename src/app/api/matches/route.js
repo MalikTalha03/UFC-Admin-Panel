@@ -1,6 +1,7 @@
 import Player from "@/models/Player"; // Import Player model
 import dbConnect from "@/lib/mongo";
 import Match from "@/models/Match";
+import Channels from "@/models/Channels";
 const moment = require("moment-timezone");
 
 export const GET = async function (req, res) {
@@ -9,25 +10,33 @@ export const GET = async function (req, res) {
   try {
     const matches = await Match.find({});
     const players = await Player.find({});
+    const channels = await Channels.find({}); // Fetch all channels
 
     // Create a map for quick lookup of player names
     const playerMap = players.reduce((acc, player) => {
       acc[player._id.toString()] = player.name; // Map player IDs to their names
       return acc;
     }, {});
-    console.log("Player Map: ", playerMap);
 
-    // Replace player IDs with names in matches
+    // Create a map for quick lookup of channel objects
+    const channelMap = channels.reduce((acc, channel) => {
+      acc[channel._id.toString()] = channel; // Map channel IDs to their objects
+      return acc;
+    }, {});
+
+    // Replace player IDs with names and channel IDs with channel objects
     const updatedMatches = matches.map((match) => {
+      const matchChannels = match.channels.map(
+        (channelId) => channelMap[channelId.toString()] || channelId
+      ); // Replace channel IDs with the full channel object
+
       return {
         ...match._doc,
         player1: playerMap[match.player1.toString()] || match.player1, // Ensure ID to name mapping
         player2: playerMap[match.player2.toString()] || match.player2,
+        channels: matchChannels, // Set full channel objects
       };
     });
-
-    // Log updatedMatches to check their structure
-    console.log("Updated Matches: ", updatedMatches);
 
     updatedMatches.sort((a, b) => {
       // Ensure that both matches have valid date fields
@@ -35,21 +44,20 @@ export const GET = async function (req, res) {
         console.warn("Date is undefined in one of the matches:", a, b);
         return 1; // Move undefined dates to the end
       }
-    
+
       // Convert dates to time for comparison
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
-    
+
       // Perform sorting based on the date
       if (dateA.getTime() === dateB.getTime()) {
         // If dates are the same, sort by player1's name
         return a.player1.localeCompare(b.player1);
       }
-    
+
       // Sort based on the date
       return dateA.getTime() - dateB.getTime();
     });
-    
 
     return new Response(JSON.stringify(updatedMatches), { status: 200 });
   } catch (error) {
