@@ -11,9 +11,12 @@ const handler = async function (req, { params }) {
     case "PATCH":
       try {
         const { channels } = await req.json();
+        //extract ids of all channels
+        const channelIds = channels.map((c) => c._id);
+
         const match = await Match.findByIdAndUpdate(
           id,
-          { channels: channels },
+          { channels: channelIds },
           { new: true }
         );
         if (!match) {
